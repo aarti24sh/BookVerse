@@ -1,33 +1,221 @@
+/* Base styling */
 body {
-    font-family: Arial, sans-serif;
-    margin: 40px;
-  }
-  input {
-    margin-bottom: 10px;
-  }
-  #message {
-    margin-top: 15px;
-    color: red;
-  }
+  font-family: Arial, sans-serif;
+  margin: 40px;
+  background-color: #f9f9f9;
+  color: #333;
+}
 
-  .modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-  }
-  
-  .modal-content {
-    background: white;
-    padding: 20px;
-    border-radius: 6px;
-    width: 300px;
-    max-width: 90%;
-  }
-  
+input, select, textarea {
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+/* Message area */
+#message {
+  margin-top: 15px;
+  color: red;
+  font-weight: bold;
+}
+
+/* Spinner */
+#spinner {
+  display: none;
+  text-align: center;
+  margin: 20px 0;
+  font-weight: bold;
+  font-size: 16px;
+  color: #333;
+}
+
+/* Modal overlay */
+.modal {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Hide modal by default */
+.modal[style*="display:none"] {
+  display: none !important;
+}
+
+/* Modal content */
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 300px;
+  max-width: 90%;
+  position: relative;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* Form inputs */
+#bookForm input,
+#bookForm select,
+#bookForm textarea {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  transition: border-color 0.2s ease;
+}
+
+#bookForm input:focus,
+#bookForm select:focus,
+#bookForm textarea:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 3px #007bff;
+}
+
+/* Buttons */
+#bookForm button[type="submit"] {
+  background-color: #007bff;
+  border: none;
+  color: white;
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  width: 48%;
+  transition: background-color 0.2s ease;
+}
+
+#bookForm button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+#closeModalBtn, #cancelDeleteBtn {
+  background-color: #6c757d;
+  border: none;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  width: 48%;
+  transition: background-color 0.2s ease;
+}
+
+#closeModalBtn:hover, #cancelDeleteBtn:hover {
+  background-color: #5a6268;
+}
+
+#confirmDeleteBtn {
+  background-color: #dc3545;
+  border: none;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-left: 10px;
+  transition: background-color 0.2s ease;
+  width: auto;
+}
+
+#confirmDeleteBtn:hover {
+  background-color: #bd2130;
+}
+
+/* Modal header */
+#modalTitle {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+/* Validation message inside modal */
+#formMessage {
+  min-height: 20px;
+  color: red;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+/* Align buttons side by side */
+#bookForm button[type="submit"], #closeModalBtn {
+  display: inline-block;
+}
+
+/* Table styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+th, td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+th {
+  background-color: #f0f0f0;
+  cursor: pointer;
+  user-select: none;
+}
+
+th:hover {
+  background-color: #e0e0e0;
+}
+
+tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+button.editBtn,
+button.deleteBtn {
+  padding: 5px 10px;
+  margin-right: 5px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 12px;
+  color: white;
+  transition: background-color 0.2s ease;
+}
+
+button.editBtn {
+  background-color: #28a745;
+}
+
+button.editBtn:hover {
+  background-color: #218838;
+}
+
+button.deleteBtn {
+  background-color: #dc3545;
+}
+
+button.deleteBtn:hover {
+  background-color: #bd2130;
+}
+
+/* Logout button */
+#logoutBtn {
+  background-color: #343a40;
+  border: none;
+  color: white;
+  padding: 8px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+}
+
+#logoutBtn:hover {
+  background-color: #23272b;
+}
+

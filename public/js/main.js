@@ -148,6 +148,8 @@ async function loadBooks() {
         return;
     }
 
+    document.getElementById('spinner').style.display = 'block';
+
     try {
         const res = await fetch('/api/books', {
             headers: { Authorization: `Bearer ${token}` },
@@ -163,6 +165,8 @@ async function loadBooks() {
         renderBooksTable(booksData);
     } catch {
         showMessage('Error fetching books');
+    } finally {
+        document.getElementById('spinner').style.display = 'none'; // Hide spinner
     }
 }
 
@@ -223,41 +227,41 @@ const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
 let bookIdToDelete = null;
 
 function confirmDelete(id) {
-  bookIdToDelete = id;
-  confirmDeleteModal.style.display = 'flex';
+    bookIdToDelete = id;
+    confirmDeleteModal.style.display = 'flex';
 }
 
 cancelDeleteBtn.addEventListener('click', () => {
-  confirmDeleteModal.style.display = 'none';
-  bookIdToDelete = null;
+    confirmDeleteModal.style.display = 'none';
+    bookIdToDelete = null;
 });
 
 confirmDeleteBtn.addEventListener('click', async () => {
-  if (!bookIdToDelete) return;
+    if (!bookIdToDelete) return;
 
-  const token = localStorage.getItem('token');
-  if (!token) return;
+    const token = localStorage.getItem('token');
+    if (!token) return;
 
-  try {
-    const res = await fetch(`/api/books/${bookIdToDelete}`, {
-      method: 'DELETE',
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
-    const json = await res.json();
-    if (json.success) {
-      showMessage('Book deleted', false);
-      loadBooks();
-    } else {
-      showMessage(json.message || 'Failed to delete book');
+    try {
+        const res = await fetch(`/api/books/${bookIdToDelete}`, {
+            method: 'DELETE',
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        const json = await res.json();
+        if (json.success) {
+            showMessage('Book deleted', false);
+            loadBooks();
+        } else {
+            showMessage(json.message || 'Failed to delete book');
+        }
+    } catch {
+        showMessage('Delete failed');
+    } finally {
+        confirmDeleteModal.style.display = 'none';
+        bookIdToDelete = null;
     }
-  } catch {
-    showMessage('Delete failed');
-  } finally {
-    confirmDeleteModal.style.display = 'none';
-    bookIdToDelete = null;
-  }
 });
 
 // ========================
@@ -279,6 +283,7 @@ document.getElementById('logoutBtn').addEventListener('click', () => {
 const bookModal = document.getElementById('bookModal');
 const bookForm = document.getElementById('bookForm');
 const modalTitle = document.getElementById('modalTitle');
+const formMessageDiv = document.getElementById('formMessage');
 
 let editingBookId = null;
 
@@ -287,25 +292,43 @@ addBookBtn?.addEventListener('click', () => {
     editingBookId = null;
     modalTitle.textContent = 'Add Book';
     bookForm.reset();
+    showFormMessage('');
     bookModal.style.display = 'flex';
 });
 
 // Close modal
 document.getElementById('closeModalBtn').addEventListener('click', () => {
     bookModal.style.display = 'none';
+    showFormMessage('');
 });
 
 bookForm?.addEventListener('submit', async (e) => {
     e.preventDefault();
+    showFormMessage('');
 
     const token = localStorage.getItem('token');
     if (!token) return;
+
+    const title = document.getElementById('bookTitle').value.trim();
+    const author = document.getElementById('bookAuthor').value.trim();
+    const ratingValue = document.getElementById('bookRating').value.trim();
+    const rating = parseInt(ratingValue);
+
+    if (!title || !author) {
+        showFormMessage('Title and Author are required');
+        return;
+    }
+
+    if (isNaN(rating) || rating < 1 || rating > 5) {
+        showFormMessage('Rating must be a number between 1 and 5');
+        return;
+    }
 
     const data = {
         title: document.getElementById('bookTitle').value.trim(),
         author: document.getElementById('bookAuthor').value.trim(),
         status: document.getElementById('bookStatus').value,
-        rating: parseInt(document.getElementById('bookRating').value) || 0,
+        rating,
         notes: document.getElementById('bookNotes').value.trim()
     };
 
@@ -324,13 +347,22 @@ bookForm?.addEventListener('submit', async (e) => {
 
         const json = await res.json();
         if (json.success) {
-            showMessage(editingBookId ? 'Book updated!' : 'Book added!', false);
-            bookModal.style.display = 'none';
-            loadBooks();
-        } else {
-            showMessage(json.message || 'Failed to save book');
-        }
+            showFormMessage(editingBookId ? 'Book updated!' : 'Book added!', false);
+            setTimeout(() => {
+              bookModal.style.display = 'none';
+              loadBooks();
+              showFormMessage(''); // clear on close
+            }, 1000);
+          } else {
+            showFormMessage(json.message || 'Failed to save book');
+          }
     } catch {
-        showMessage('Error saving book');
+        showFormMessage('Error saving book');
     }
 });
+
+function showFormMessage(msg = '', isError = true) {
+    if (!formMessageDiv) return;
+    formMessageDiv.textContent = msg;
+    formMessageDiv.style.color = isError ? 'red' : 'green';
+}

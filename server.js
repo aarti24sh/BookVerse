@@ -3,6 +3,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const helmet = require('helmet');
 //const xss = require('xss-clean');
+const xssSanitize = require('./middleware/xssSanitize');
 const cors = require('cors');
 //const mongoSanitize = require('express-mongo-sanitize');
 const connectDB = require('./utils/connectDB');
@@ -23,7 +24,8 @@ app.use(express.json());
 // Middleware
 app.use(helmet());
 //app.use(xss());
-//app.use(mongoSanitize());
+app.use(xssSanitize);
+//app.use(mongoSanitize({ replaceWith: '_' }));
 app.use(cors());
 app.use(express.static('public'));
 
