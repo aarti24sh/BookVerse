@@ -6,15 +6,25 @@
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
-  <h2>Login</h2>
-  <form id="loginForm">
-    <label>Email: <input type="email" name="email" required /></label><br />
-    <label>Password: <input type="password" name="password" required /></label><br />
-    <button type="submit">Login</button>
-  </form>
-  <p>Don't have an account? <a href="register.html">Register here</a></p>
+  <div class="form-container">
+    <h2>Login to BookVerse</h2>
+    <form id="loginForm">
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" name="email" id="email" required />
+      </div>
 
-  <div id="message"></div>
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password" required />
+      </div>
+
+      <button type="submit">Login</button>
+    </form>
+
+    <p>Don't have an account? <a href="register.html">Register here</a></p>
+    <div id="message"></div>
+  </div>
 
   <script src="js/main.js" defer></script>
 </body>

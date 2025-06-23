@@ -6,17 +6,31 @@
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
-  <h2>Register</h2>
-  <form id="registerForm">
-    <label>Username: <input type="text" name="username" required /></label><br />
-    <label>Email: <input type="email" name="email" required /></label><br />
-    <label>Password: <input type="password" name="password" required minlength="6" /></label><br />
-    <button type="submit">Register</button>
-  </form>
-  <p>Already have an account? <a href="index.html">Login here</a></p>
+  <div class="form-container">
+    <h2>Register</h2>
+    <form id="registerForm">
+      <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" name="username" id="username" required />
+      </div>
 
-  <div id="message"></div>
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" name="email" id="email" required />
+      </div>
 
-  <script src="js/main.js"></script>
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password" required minlength="6" />
+      </div>
+
+      <button type="submit">Register</button>
+    </form>
+
+    <p>Already have an account? <a href="index.html">Login here</a></p>
+    <div id="message"></div>
+  </div>
+
+  <script src="js/main.js" defer></script>
 </body>
 </html>
