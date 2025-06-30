@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const { register, login } = require('../controllers/authController');
+const { register, login, changePassword } = require('../controllers/authController');
 const { check, validationResult } = require('express-validator');
+const { protect } = require('../middleware/auth');
 
 // Validation middlewares
 const validateRegister = [
@@ -41,8 +42,27 @@ const validateLogin = [
   }
 ];
 
+// Validation for change password
+const validateChangePassword = [
+  check('currentPassword', 'Current password is required').notEmpty(),
+  check('newPassword', 'New password must be at least 6 characters and include letters, numbers, and special characters')
+    .isLength({ min: 6 })
+    .matches(/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*])/),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ 
+        success: false,
+        errors: errors.array()
+      });
+    }
+    next();
+  }
+];
+
 // Routes
 router.post('/register', validateRegister, register);
 router.post('/login', validateLogin, login);
+router.put('/change-password', protect, validateChangePassword, changePassword);
 
 module.exports = router;

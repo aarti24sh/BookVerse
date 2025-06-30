@@ -4,6 +4,11 @@ const messageDiv = document.getElementById('message');
 const booksTbody = document.getElementById('booksTbody');
 const searchInput = document.getElementById('searchInput');
 const addBookBtn = document.getElementById('addBookBtn');
+const changePasswordBtn = document.getElementById('changePasswordBtn');
+const changePasswordModal = document.getElementById('changePasswordModal');
+const closeChangePasswordModalBtn = document.getElementById('closeChangePasswordModal');
+const changePasswordForm = document.getElementById('changePasswordForm');
+const changePasswordMessage = document.getElementById('changePasswordMessage');
 
 let booksData = [];
 let currentSortField = null;
@@ -83,6 +88,91 @@ if (loginForm) {
         }
     });
 }
+
+// Open Change Password modal
+changePasswordBtn?.addEventListener('click', () => {
+    changePasswordMessage.textContent = '';
+    changePasswordForm.reset();
+    changePasswordModal.style.display = 'flex';
+});
+
+// Close Change Password modal
+closeChangePasswordModalBtn?.addEventListener('click', () => {
+    changePasswordModal.style.display = 'none';
+});
+
+// Handle Change Password form submission
+changePasswordForm?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const currentPassword = document.getElementById('currentPassword').value.trim();
+    const newPassword = document.getElementById('newPassword').value.trim();
+    const confirmNewPassword = document.getElementById('confirmNewPassword').value.trim();
+
+    // Clear previous message
+    changePasswordMessage.textContent = '';
+
+    // Basic client-side validation
+    if (!currentPassword || !newPassword || !confirmNewPassword) {
+        changePasswordMessage.textContent = 'All fields are required.';
+        return;
+    }
+
+    if (newPassword !== confirmNewPassword) {
+        changePasswordMessage.textContent = 'New passwords do not match.';
+        return;
+    }
+
+    // You can add more password strength validation here if desired
+
+    const token = localStorage.getItem('token');
+    if (!token) {
+        changePasswordMessage.textContent = 'You must be logged in to change your password.';
+        return;
+    }
+
+    try {
+        const res = await fetch(`${apiBaseUrl}/change-password`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+                currentPassword,
+                newPassword,
+            }),
+        });
+
+        const json = await res.json();
+
+        if (json.success) {
+            changePasswordMessage.style.color = 'green';
+            changePasswordMessage.textContent = 'Password changed successfully!';
+            setTimeout(() => {
+                changePasswordModal.style.display = 'none';
+                changePasswordMessage.style.color = 'red';
+                changePasswordForm.reset();
+            }, 1500);
+        } else {
+            // Show error messages from server validation or other errors
+            if (json.errors && Array.isArray(json.errors)) {
+                changePasswordMessage.textContent = json.errors.map(e => e.msg).join(', ');
+            } else {
+                changePasswordMessage.textContent = json.message || 'Failed to change password.';
+            }
+        }
+    } catch (error) {
+        changePasswordMessage.textContent = 'Network error. Please try again.';
+    }
+});
+
+// Close modals when clicking outside modal content
+window.addEventListener('click', (e) => {
+    if (e.target === changePasswordModal) {
+        changePasswordModal.style.display = 'none';
+    }
+});
 
 // ========================
 // Book Listing
@@ -349,13 +439,13 @@ bookForm?.addEventListener('submit', async (e) => {
         if (json.success) {
             showFormMessage(editingBookId ? 'Book updated!' : 'Book added!', false);
             setTimeout(() => {
-              bookModal.style.display = 'none';
-              loadBooks();
-              showFormMessage(''); // clear on close
+                bookModal.style.display = 'none';
+                loadBooks();
+                showFormMessage(''); // clear on close
             }, 1000);
-          } else {
+        } else {
             showFormMessage(json.message || 'Failed to save book');
-          }
+        }
     } catch {
         showFormMessage('Error saving book');
     }
