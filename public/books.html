@@ -13,8 +13,9 @@
   <h2>My Book List</h2>
 
   <!-- Logout Button -->
-  <div style="margin-bottom: 10px;">
-    <button id="logoutBtn" style="float: right;">Logout</button>
+  <div style="margin-bottom: 10px; display: flex; justify-content: flex-end; gap: 10px;">
+    <button id="changePasswordBtn">Change Password</button>
+    <button id="logoutBtn">Logout</button>
   </div>
 
   <!-- Search & Add -->
@@ -78,6 +79,21 @@
         <button id="cancelDeleteBtn">Cancel</button>
         <button id="confirmDeleteBtn">Yes, Delete</button>
       </div>
+    </div>
+  </div>
+
+  <!-- Change Password Modal -->
+  <div id="changePasswordModal" class="modal" style="display:none;">
+    <div class="modal-content">
+      <h3>Change Password</h3>
+      <div id="changePasswordMessage" style="color: red; min-height: 20px; margin-bottom: 10px;"></div>
+      <form id="changePasswordForm">
+        <input type="password" id="currentPassword" placeholder="Current Password" required style="width: 100%; margin-bottom: 10px; padding: 8px;" />
+        <input type="password" id="newPassword" placeholder="New Password" required style="width: 100%; margin-bottom: 10px; padding: 8px;" />
+        <input type="password" id="confirmNewPassword" placeholder="Confirm New Password" required style="width: 100%; margin-bottom: 10px; padding: 8px;" />
+        <button type="submit" style="background-color:#007bff; color:white; padding:10px; border:none; border-radius:4px; cursor:pointer;">Change Password</button>
+        <button type="button" id="closeChangePasswordModal" style="margin-left:10px; background-color:#6c757d; color:white; padding:10px; border:none; border-radius:4px; cursor:pointer;">Cancel</button>
+      </form>
     </div>
   </div>
 

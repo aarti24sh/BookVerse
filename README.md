@@ -4,23 +4,15 @@ A simple full-stack web application to manage your personal book collection. Use
 
 🚀 Features
 
-User Registration & Login (with JWT authentication)
-
-Secure Password Hashing (using bcrypt)
-
-Add, Edit, Delete Books
-
-Search & Sort Books by Title, Author, Status, or Rating
-
-Modal-based UI for Add/Edit Forms
-
-Client-side & Server-side Validation
-
-MongoDB with Mongoose ORM
-
-Secure HTTP Headers via Helmet
-
-Deployed on Render
+- User Registration & Login (with JWT authentication)
+- Secure Password Hashing (using bcrypt)
+- Add, Edit, Delete Books
+- Search & Sort Books by Title, Author, Status, or Rating
+- Modal-based UI for Add/Edit Forms
+- Client-side & Server-side Validation
+- MongoDB with Mongoose ORM
+- Secure HTTP Headers via Helmet
+- Deployed on Render
 
 🗂 Project Structure
 
@@ -179,10 +171,21 @@ Upload book cover images
 
 Dark mode toggle 🌙
 
+🤝 Contributing
+Contributions are warmly welcomed! If you'd like to contribute:
+
+Open an issue to suggest features or report bugs
+
+Submit a pull request with fixes or improvements
+
+Help translate or improve documentation
+
+Please follow the existing code style and write clear commit messages.
+
 🙏 Credits
 
 Created with ❤️ by Aarti Shankar
 
 📄 License
 
-This project is open-source and free to use.
+This project is licensed under the MIT License — see the LICENSE file for details.
