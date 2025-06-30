@@ -77,12 +77,14 @@ Edit
 ```bash
 git clone https://github.com/your-username/bookverse.git
 cd bookverse
-2. Install Dependencies
+
+### 2. Install Dependencies
 bash
 Copy
 Edit
 npm install
-3. Set Environment Variables
+
+### 3. Set Environment Variables
 Create a .env file in the root directory and add:
 
 ini
@@ -91,14 +93,15 @@ Edit
 PORT=5000
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_secret_key
-4. Start the Server
+
+### 4. Start the Server
 bash
 Copy
 Edit
 npm start
 Visit: http://localhost:5000
 
-📬 API Endpoints (Test with Postman)
+###📬 API Endpoints (Test with Postman)
 🔑 Register
 http
 Copy
@@ -126,7 +129,7 @@ Edit
 }
 Returns a JWT token for authentication.
 
-📘 Create a Book
+### 📘 Create a Book
 http
 Copy
 Edit
@@ -149,7 +152,7 @@ PUT /api/books/:id — Update a book
 
 DELETE /api/books/:id — Delete a book
 
-🌐 Deployment on Render
+### 🌐 Deployment on Render
 Push code to GitHub
 
 Create a new Web Service on Render
@@ -168,7 +171,7 @@ Set start command: node server.js
 
 Deploy and test your live URL 🎉
 
-🔐 Security Features
+### 🔐 Security Features
 helmet for secure HTTP headers
 
 NoSQL injection & XSS protection
@@ -177,28 +180,23 @@ Hashed passwords with bcrypt
 
 Auth-protected routes via JWT
 
-🚧 Future Improvements
+### 🚧 Future Improvements
+
 Pagination support
-
 Book category filtering
-
 Upload book cover images
-
 Dark mode toggle 🌙
 
-🤝 Contributing
+### 🤝 Contributing
 Contributions are warmly welcomed! If you'd like to help:
 
 💡 Open an issue to suggest a feature or report a bug
-
 🔧 Submit a pull request
-
 🌍 Help translate or improve documentation
-
 Please follow the existing code style and write clear commit messages.
 
-🙏 Credits
+### 🙏 Credits
 Created with ❤️ by Aarti Shankar
 
-📄 License
+### 📄 License
 This project is licensed under the MIT License.
